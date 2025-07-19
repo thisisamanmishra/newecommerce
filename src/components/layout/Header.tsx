@@ -8,11 +8,11 @@ interface HeaderProps {
 }
 
 export default function Header({ currentView, onViewChange }: HeaderProps) {
-  const { state } = useApp();
+  const { auth, cart } = useApp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const cartItemCount = state.cart.reduce((total, item) => total + item.quantity, 0);
+  const cartItemCount = cart.getCartItemCount();
 
   const navigationItems = [
     { id: 'home', label: 'Home' },
@@ -80,18 +80,18 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
             {/* User Menu */}
             <div className="relative">
               <button
-                onClick={() => onViewChange(state.user ? 'profile' : 'login')}
+                onClick={() => onViewChange(auth.user ? 'profile' : 'login')}
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <User className="w-6 h-6" />
                 <span className="hidden lg:block">
-                  {state.user ? state.user.name : 'Login'}
+                  {auth.profile?.full_name || 'Login'}
                 </span>
               </button>
             </div>
 
             {/* Admin Panel Link */}
-            {state.user?.role === 'admin' && (
+            {auth.user?.email === 'admin@example.com' && (
               <button
                 onClick={() => onViewChange('admin')}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
@@ -146,14 +146,14 @@ export default function Header({ currentView, onViewChange }: HeaderProps) {
                 onClick={() => {
                   onViewChange(state.user ? 'profile' : 'login');
                   setIsMenuOpen(false);
-                }}
+                onClick={() => onViewChange(auth.user ? 'profile' : 'login')}
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <User className="w-5 h-5" />
-                <span>{state.user ? state.user.name : 'Login'}</span>
+                <span>{auth.profile?.full_name || 'Login'}</span>
               </button>
 
-              {state.user?.role === 'admin' && (
+              {auth.user?.email === 'admin@example.com' && (
                 <button
                   onClick={() => {
                     onViewChange('admin');
