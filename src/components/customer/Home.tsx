@@ -8,10 +8,10 @@ interface HomeProps {
 }
 
 export default function Home({ onViewChange }: HomeProps) {
-  const { state } = useApp();
+  const { products } = useApp();
 
-  const featuredProducts = state.products?.products?.slice(0, 4) || [];
-  const categories = state.products?.categories?.slice(0, 4) || [];
+  const featuredProducts = products?.products?.slice(0, 4) || [];
+  const categories = products?.categories?.slice(0, 4) || [];
 
   return (
     <div className="min-h-screen bg-gray-50">
