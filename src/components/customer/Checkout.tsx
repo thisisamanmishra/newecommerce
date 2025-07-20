@@ -25,7 +25,7 @@ export default function Checkout({ onViewChange }: CheckoutProps) {
   });
 
   const cartItemsWithDetails = state.cart.map(cartItem => {
-    const product = state.products.find(p => p.id === cartItem.productId);
+    const product = state.products?.products?.find(p => p.id === cartItem.productId);
     return { ...cartItem, product };
   }).filter(item => item.product);
 

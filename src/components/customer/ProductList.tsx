@@ -17,7 +17,7 @@ export default function ProductList({ onViewChange, filterCategory }: ProductLis
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = state.products.filter(product => {
+    let filtered = (state.products?.products || []).filter(product => {
       if (selectedCategory !== 'all' && product.category !== selectedCategory) {
         return false;
       }
@@ -44,9 +44,9 @@ export default function ProductList({ onViewChange, filterCategory }: ProductLis
     });
 
     return filtered;
-  }, [state.products, selectedCategory, priceRange, sortBy]);
+  }, [state.products?.products, selectedCategory, priceRange, sortBy]);
 
-  const categories = ['all', ...Array.from(new Set(state.products.map(p => p.category)))];
+  const categories = ['all', ...Array.from(new Set((state.products?.products || []).map(p => p.category)))];
 
   return (
     <div className="min-h-screen bg-gray-50">

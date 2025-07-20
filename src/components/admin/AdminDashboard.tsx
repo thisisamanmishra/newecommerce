@@ -5,14 +5,14 @@ import { useApp } from '../../contexts/AppContext';
 export default function AdminDashboard() {
   const { state } = useApp();
 
-  const totalProducts = state.products.length;
-  const activeProducts = state.products.filter(p => p.isActive).length;
+  const totalProducts = state.products?.products?.length || 0;
+  const activeProducts = state.products?.products?.filter(p => p.isActive).length || 0;
   const totalOrders = state.orders.length;
   const totalRevenue = state.orders.reduce((sum, order) => sum + order.finalAmount, 0);
   const pendingOrders = state.orders.filter(order => order.status === 'pending').length;
 
   const recentOrders = state.orders.slice(0, 5);
-  const topProducts = state.products
+  const topProducts = (state.products?.products || [])
     .sort((a, b) => b.reviewCount - a.reviewCount)
     .slice(0, 5);
 

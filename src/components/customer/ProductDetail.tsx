@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Star, ShoppingCart, Heart, Truck, Shield, ArrowLeft, Plus, Minus } from 'lucide-react';
 import { useApp } from '../../contexts/AppContext';
 import { Product, Review } from '../../types';
+import { mockReviews } from '../../data/mockData';
 
 interface ProductDetailProps {
   productId: string;
@@ -14,8 +15,8 @@ export default function ProductDetail({ productId, onViewChange }: ProductDetail
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
 
-  const product = state.products.find(p => p.id === productId);
-  const reviews = state.reviews.filter(r => r.productId === productId && r.isApproved);
+  const product = state.products?.products?.find(p => p.id === productId);
+  const reviews = mockReviews.filter(r => r.productId === productId && r.isApproved);
 
   if (!product) {
     return (

@@ -20,14 +20,14 @@ export default function ProductManagement() {
     images: '',
   });
 
-  const filteredProducts = state.products.filter(product => {
+  const filteredProducts = (state.products?.products || []).filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = categoryFilter === 'all' || product.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });
 
-  const categories = Array.from(new Set(state.products.map(p => p.category)));
+  const categories = Array.from(new Set((state.products?.products || []).map(p => p.category)));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
